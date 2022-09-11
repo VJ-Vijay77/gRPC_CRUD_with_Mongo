@@ -62,6 +62,7 @@ func main() {
 		log.Println(err)
 	}
 
+	//creating a collection in mongodb
 	collection = client.Database("mydb").Collection("blog")
 
 	lis, err := net.Listen("tcp", "0.0.0.0:50051")
