@@ -73,6 +73,7 @@ func main() {
 
 	opts := []grpc.ServerOption{}
 
+	//creating new grpc server
 	s := grpc.NewServer(opts...)
 	blogpb.RegisterBlogServiceServer(s, &server{})
 
