@@ -29,6 +29,7 @@ type blogitem struct {
 	Title    string `bson:"title"`
 }
 
+//implementing the interface in proto
 func(*server) CreateBlog(ctx context.Context,req *blogpb.CreateBlogRequest) (*blogpb.CreateBlogResponse, error) {
 
 	blog := req.GetBlog()
