@@ -21,6 +21,7 @@ var collection *mongo.Collection
 type server struct {
 }
 
+//mongo struct model
 type blogitem struct {
 	ID primitive.ObjectID `bson:"_id,omitempty"`
 	AuthorID string `bson:"author_id"`
