@@ -46,6 +46,7 @@ func(*server) CreateBlog(ctx context.Context,req *blogpb.CreateBlogRequest) (*bl
 
 func main() {
 
+	//this shows the details like time and lines of codes when error or fatal occur
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
 	fmt.Println("Blog Service Started")
