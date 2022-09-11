@@ -10,18 +10,45 @@ import (
 	"time"
 
 	"github.com/VJ-Vijay77/gRPC/blog/blogpb"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"google.golang.org/grpc"
 )
 
-type server struct{}
+var collection *mongo.Collection
+
+type server struct {
+}
+
+type blogitem struct {
+	ID primitive.ObjectID `bson:"_id,omitempty"`
+	AuthorID string `bson:"author_id"`
+	Content  string `bson:"content"`
+	Title    string `bson:"title"`
+}
+
+func(*server) CreateBlog(ctx context.Context,req *blogpb.CreateBlogRequest) (*blogpb.CreateBlogResponse, error) {
+
+	blog := req.GetBlog()
+
+	data := blogitem {
+		AuthorID: blog.GetAuthorId(),
+		Title: blog.GetTitle(),
+		Content: blog.GetContent(),
+	}
+
+}
+
+
 
 func main() {
 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
 	fmt.Println("Blog Service Started")
+
+	fmt.Println("Connecting to MongoDb")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
@@ -30,9 +57,7 @@ func main() {
 		log.Println(err)
 	}
 
-	
-
-
+	collection = client.Database("mydb").Collection("blog")
 
 	lis, err := net.Listen("tcp", "0.0.0.0:50051")
 	if err != nil {
@@ -59,6 +84,8 @@ func main() {
 	s.Stop()
 	fmt.Println("Stopping the listener")
 	lis.Close()
+	fmt.Println("Stopping MongoDb")
+	client.Disconnect(context.TODO())
 	fmt.Println("End of Program")
 
 }
