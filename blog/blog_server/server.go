@@ -53,6 +53,8 @@ func main() {
 
 	fmt.Println("Connecting to MongoDb")
 
+
+	//? connecting mongo db with client
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017"))
