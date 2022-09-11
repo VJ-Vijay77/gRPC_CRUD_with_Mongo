@@ -84,6 +84,7 @@ func main() {
 		}
 	}()
 
+	//creating a channel
 	ch := make(chan os.Signal, 1)
 	signal.Notify(ch, os.Interrupt)
 
